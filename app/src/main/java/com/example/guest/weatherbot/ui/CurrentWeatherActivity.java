@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.services.OpenWeatherService;
+import com.example.guest.weatherbot.services.TemperatureConverter;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +25,9 @@ import okhttp3.Response;
 
 public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.cityNameTextView) TextView mCityNameTextView;
+    @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
+    @Bind(R.id.weatherDescriptionTextView) TextView mWeatherDescriptionTextView;
 
     public ArrayList<WeatherStatus> mStatuses = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
@@ -55,12 +61,11 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        for (WeatherStatus status : mStatuses) {
-                            Log.d(TAG, "City: " + status.getCityName());
-                            Log.d(TAG, "Main: " + status.getMain());
-                            Log.d(TAG, "Description " + status.getDescription());
-                            Log.d(TAG, "Temp: " + status.getTemp());
-                        }
+                        Resources res = getResources();
+                        WeatherStatus status = mStatuses.get(0);
+                        mCityNameTextView.setText(status.getCityName());
+                        mWeatherDescriptionTextView.setText(WordUtils.capitalize(status.getDescription()));
+                        mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(status.getTemp())));
                     }
                 });
             }

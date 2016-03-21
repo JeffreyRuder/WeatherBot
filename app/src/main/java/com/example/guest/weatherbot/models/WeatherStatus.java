@@ -10,8 +10,8 @@ public class WeatherStatus {
     private double mTemp;
 //    private int mPressure;
 //    private int mHumidity;
-//    private double mLow;
-//    private double mHigh;
+//    private double mMin;
+//    private double mMax;
 //    private double mWindSpeed;
 //    private int mWindDegrees;
 //    private int mClouds;
@@ -29,8 +29,8 @@ public class WeatherStatus {
         this.mTemp = mTemp;
 //        this.mPressure = mPressure;
 //        this.mHumidity = mHumidity;
-//        this.mLow = mLow;
-//        this.mHigh = mHigh;
+//        this.mMin = mMin;
+//        this.mMax = mMax;
 //        this.mWindSpeed = mWindSpeed;
 //        this.mWindDegrees = mWindDegrees;
 //        this.mClouds = mClouds;
@@ -69,12 +69,12 @@ public class WeatherStatus {
 //        return mHumidity;
 //    }
 //
-//    public double getLow() {
-//        return mLow;
+//    public double getMin() {
+//        return mMin;
 //    }
 //
-//    public double getHigh() {
-//        return mHigh;
+//    public double getMax() {
+//        return mMax;
 //    }
 //
 //    public double getWindSpeed() {
