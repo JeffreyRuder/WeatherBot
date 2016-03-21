@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">WeatherBot</string>
 
+    <string name="appid">b65070e5fb08750ce2107ae3286b7f60</string>
+
     <string name="zip_code_hint">Enter Zip Code</string>
     <string name="submit">Submit</string>
     <string name="weather_near">Weather Near %s</string>
