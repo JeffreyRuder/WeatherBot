@@ -2,7 +2,6 @@ package com.example.guest.weatherbot.ui;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,8 +27,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static com.example.guest.weatherbot.R.color.colorPrimaryLight;
-
 public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.cityNameTextView) TextView mCityNameTextView;
@@ -37,7 +34,8 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.weatherDescriptionTextView) TextView mWeatherDescriptionTextView;
     @Bind(R.id.backgroundImage) ImageView mBackgroundImage;
 
-    public ArrayList<WeatherStatus> mStatuses = new ArrayList<>();
+    public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
+    public ArrayList<WeatherStatus> mForecastStatus = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
 
     @Override
@@ -52,6 +50,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
         mLocationTextView.setText(String.format(res.getString(R.string.weather_near), location));
         getCurrentWeather(location);
+        getForecast(location);
     }
 
     private void getCurrentWeather(String location) {
@@ -64,13 +63,14 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                mStatuses = openWeatherService.processCurrentWeather(response);
+                mCurrentStatus = openWeatherService.processCurrentWeather(response);
+                Log.v("HERE ", response.toString());
 
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Resources res = getResources();
-                        WeatherStatus currentWeatherStatus = mStatuses.get(0);
+                        WeatherStatus currentWeatherStatus = mCurrentStatus.get(0);
                         mCityNameTextView.setText(currentWeatherStatus.getCityName());
                         mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
                         mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
@@ -83,6 +83,27 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                         } else {
                             mBackgroundImage.setBackgroundColor(ContextCompat.getColor(CurrentWeatherActivity.this, R.color.colorPrimaryLight));
                         }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getForecast(String location) {
+        final OpenWeatherService openWeatherService = new OpenWeatherService(this);
+        openWeatherService.getForecastWeather(location, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
                     }
                 });
             }

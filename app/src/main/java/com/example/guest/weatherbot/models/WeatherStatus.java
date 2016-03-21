@@ -8,35 +8,37 @@ public class WeatherStatus {
     private String mDescription;
     private String mIcon;
     private double mTemp;
-//    private int mPressure;
-//    private int mHumidity;
-//    private double mMin;
-//    private double mMax;
-//    private double mWindSpeed;
-//    private int mWindDegrees;
-//    private int mClouds;
-//    private Date dateTime;
-//    private Date mSunrise;
-//    private Date mSunset;
+    private int mPressure;
+    private int mHumidity;
+    private double mMin;
+    private double mMax;
+    private double mWindSpeed;
+    private int mWindDegrees;
+    private int mClouds;
+    private Date dateTime;
+    private Date mSunrise;
+    private Date mSunset;
     private int mCityId;
     private String mCityName;
 
-    public WeatherStatus(int mId, String mMain, String mDescription, String mIcon, double mTemp, int mCityId, String mCityName) {
+    public WeatherStatus(int mId, String mMain, String mDescription, String mIcon, double mTemp,
+                         int mPressure, int mHumidity, double mMin, double mMax, double mWindSpeed,
+                         int mWindDegrees, int mClouds, int dateTime, int mSunrise, int mSunset, int mCityId, String mCityName) {
         this.mId = mId;
         this.mMain = mMain;
         this.mDescription = mDescription;
         this.mIcon = mIcon;
         this.mTemp = mTemp;
-//        this.mPressure = mPressure;
-//        this.mHumidity = mHumidity;
-//        this.mMin = mMin;
-//        this.mMax = mMax;
-//        this.mWindSpeed = mWindSpeed;
-//        this.mWindDegrees = mWindDegrees;
-//        this.mClouds = mClouds;
-//        this.dateTime = dateTime;
-//        this.mSunrise = mSunrise;
-//        this.mSunset = mSunset;
+        this.mPressure = mPressure;
+        this.mHumidity = mHumidity;
+        this.mMin = mMin;
+        this.mMax = mMax;
+        this.mWindSpeed = mWindSpeed;
+        this.mWindDegrees = mWindDegrees;
+        this.mClouds = mClouds;
+        this.dateTime = new Date(dateTime);
+        this.mSunrise = new Date(mSunrise);
+        this.mSunset = new Date(mSunset);
         this.mCityId = mCityId;
         this.mCityName = mCityName;
     }
@@ -61,45 +63,45 @@ public class WeatherStatus {
         return mTemp;
     }
 
-//    public int getPressure() {
-//        return mPressure;
-//    }
-//
-//    public int getHumidity() {
-//        return mHumidity;
-//    }
-//
-//    public double getMin() {
-//        return mMin;
-//    }
-//
-//    public double getMax() {
-//        return mMax;
-//    }
-//
-//    public double getWindSpeed() {
-//        return mWindSpeed;
-//    }
-//
-//    public int getWindDegrees() {
-//        return mWindDegrees;
-//    }
-//
-//    public int getClouds() {
-//        return mClouds;
-//    }
-//
-//    public Date getDateTime() {
-//        return dateTime;
-//    }
-//
-//    public Date getSunrise() {
-//        return mSunrise;
-//    }
-//
-//    public Date getSunset() {
-//        return mSunset;
-//    }
+    public int getPressure() {
+        return mPressure;
+    }
+
+    public int getHumidity() {
+        return mHumidity;
+    }
+
+    public double getMin() {
+        return mMin;
+    }
+
+    public double getMax() {
+        return mMax;
+    }
+
+    public double getWindSpeed() {
+        return mWindSpeed;
+    }
+
+    public int getWindDegrees() {
+        return mWindDegrees;
+    }
+
+    public int getClouds() {
+        return mClouds;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public Date getSunrise() {
+        return mSunrise;
+    }
+
+    public Date getSunset() {
+        return mSunset;
+    }
 
     public int getCityId() {
         return mCityId;

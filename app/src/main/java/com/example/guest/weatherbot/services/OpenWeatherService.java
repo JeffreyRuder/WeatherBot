@@ -40,6 +40,22 @@ public class OpenWeatherService {
         call.enqueue(callback);
     }
 
+    public void getForecastWeather(String location, Callback callback) {
+        String APPID = mContext.getString(R.string.appid);
+
+        OkHttpClient client = new OkHttpClient.Builder().build();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.openweathermap.org/data/2.5/forecast").newBuilder();
+        urlBuilder.addQueryParameter("zip", location);
+        urlBuilder.addQueryParameter("appid", APPID);
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder().url(url).build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
+
     public ArrayList<WeatherStatus> processCurrentWeather(Response response) {
         ArrayList<WeatherStatus> statuses = new ArrayList<>();
         try {
@@ -51,10 +67,21 @@ public class OpenWeatherService {
                 String description = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("description");
                 String icon = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
                 double temp = weatherJSON.getJSONObject("main").getDouble("temp");
+                int pressure = weatherJSON.getJSONObject("main").getInt("pressure");
+                int humidity = weatherJSON.getJSONObject("main").getInt("humidity");
+                double tempMin = weatherJSON.getJSONObject("main").getDouble("temp_min");
+                double tempMax = weatherJSON.getJSONObject("main").getDouble("temp_max");
+                double windSpeed = weatherJSON.getJSONObject("wind").getDouble("speed");
+                int windDegrees = weatherJSON.getJSONObject("wind").getInt("deg");
+                int clouds = weatherJSON.getJSONObject("clouds").getInt("all");
+                int dateTime = weatherJSON.getInt("dt");
+                int sunrise = weatherJSON.getJSONObject("sys").getInt("sunrise");
+                int sunset = weatherJSON.getJSONObject("sys").getInt("sunset");
                 int cityId = weatherJSON.getInt("id");
                 String cityName = weatherJSON.getString("name");
 
-                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, cityId, cityName);
+                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, pressure, humidity,
+                        tempMin, tempMax, windSpeed, windDegrees, clouds, dateTime, sunrise, sunset, cityId, cityName);
                 statuses.add(status);
             }
         } catch (IOException | JSONException e) {
@@ -62,4 +89,27 @@ public class OpenWeatherService {
         }
         return statuses;
     }
+
+//    public ArrayList<WeatherStatus> processForecastWeather(Response response) {
+//        ArrayList<WeatherStatus> statuses = new ArrayList<>();
+//        try {
+//            String jsonData = response.body().string();
+//            if (response.isSuccessful()) {
+//                JSONObject weatherJSON = new JSONObject(jsonData);
+//                int id = weatherJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
+//                String main = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("main");
+//                String description = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("description");
+//                String icon = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
+//                double temp = weatherJSON.getJSONObject("main").getDouble("temp");
+//                int cityId = weatherJSON.getInt("id");
+//                String cityName = weatherJSON.getString("name");
+//
+//                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, cityId, cityName);
+//                statuses.add(status);
+//            }
+//        } catch (IOException | JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return statuses;
+//    }
 }
