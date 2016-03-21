@@ -8,9 +8,11 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.guest.weatherbot.R;
+import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.services.OpenWeatherService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +22,9 @@ import okhttp3.Response;
 
 public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.locationTextView) TextView mLocationTextView;
+
+    public ArrayList<WeatherStatus> mStatuses = new ArrayList<>();
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +50,19 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonData = response.body().string();
-                    if (response.isSuccessful()) {
-                        Log.v("JSON DATA", jsonData);
+                mStatuses = openWeatherService.processCurrentWeather(response);
+
+                CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (WeatherStatus status : mStatuses) {
+                            Log.d(TAG, "City: " + status.getCityName());
+                            Log.d(TAG, "Main: " + status.getMain());
+                            Log.d(TAG, "Description " + status.getDescription());
+                            Log.d(TAG, "Temp: " + status.getTemp());
+                        }
                     }
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
+                });
             }
         });
     }

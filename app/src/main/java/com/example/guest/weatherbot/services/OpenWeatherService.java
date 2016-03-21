@@ -1,18 +1,22 @@
 package com.example.guest.weatherbot.services;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import com.example.guest.weatherbot.R;
+import com.example.guest.weatherbot.models.WeatherStatus;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 
-/**
- * Created by Guest on 3/21/16.
- */
 public class OpenWeatherService {
     private Context mContext;
 
@@ -34,5 +38,28 @@ public class OpenWeatherService {
 
         Call call = client.newCall(request);
         call.enqueue(callback);
+    }
+
+    public ArrayList<WeatherStatus> processCurrentWeather(Response response) {
+        ArrayList<WeatherStatus> statuses = new ArrayList<>();
+        try {
+            String jsonData = response.body().string();
+            if (response.isSuccessful()) {
+                JSONObject weatherJSON = new JSONObject(jsonData);
+                int id = weatherJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
+                String main = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("main");
+                String description = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("description");
+                String icon = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
+                double temp = weatherJSON.getJSONObject("main").getDouble("temp");
+                int cityId = weatherJSON.getInt("id");
+                String cityName = weatherJSON.getString("name");
+
+                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, cityId, cityName);
+                statuses.add(status);
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return statuses;
     }
 }
