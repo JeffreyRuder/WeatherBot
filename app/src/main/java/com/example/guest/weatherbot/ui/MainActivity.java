@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Picasso.with(MainActivity.this).load(R.drawable.bot_rain).fit().centerCrop().into(mBackgroundImage);
+        Picasso.with(MainActivity.this).load("http://i.imgur.com/5ibRTZ8.jpg").fit().centerCrop().into(mBackgroundImage);
         mSubmitButton.setOnClickListener(this);
 
         mUserZip.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String location = mUserZip.getText().toString();
             Intent intent = new Intent(MainActivity.this, CurrentWeatherActivity.class);
             intent.putExtra("location", location);
+            mUserZip.setText("");
             startActivity(intent);
         }
     }

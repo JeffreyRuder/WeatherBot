@@ -8,31 +8,31 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/backgroundImage" />
+        android:id="@+id/backgroundImage"
+        android:alpha="0.5"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/userZip"
         android:hint="@string/zip_code_hint"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:background="@color/colorPrimary"
         android:textColor="@color/colorIcon"
         android:textColorHint="@color/colorIcon"
         android:padding="6dp"
         android:gravity="center_horizontal"
         android:inputType="number"
-        android:layout_marginTop="40dp" />
+        android:layout_above="@+id/submitButton"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
         android:id="@+id/submitButton"
-        android:layout_below="@+id/userZip"
         android:backgroundTint="@color/colorPrimaryDark"
         android:textColor="@color/colorIcon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
