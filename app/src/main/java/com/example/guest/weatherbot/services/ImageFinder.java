@@ -36,6 +36,9 @@ public class ImageFinder {
             //clear sky
             case 800: image = "http://i.imgur.com/EIJMl2T.jpg";
                 break;
+            //few clouds
+            case 801: image = "http://i.imgur.com/hUMz3ui.jpg";
+                break;
             //scattered or broken clouds
             case 802:case 803: image = "http://i.imgur.com/zvamn63.jpg";
                     break;

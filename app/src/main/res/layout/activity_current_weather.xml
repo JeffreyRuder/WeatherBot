@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.7"
+        android:alpha="0.3"
         android:id="@+id/backgroundImage" />
 
     <TextView
@@ -43,20 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="50 deg F"
+            android:text="Description"
             android:textSize="48sp"
             android:layout_below="@id/cityNameTextView"
-            android:id="@+id/temperatureTextView"
+            android:id="@+id/weatherDescriptionTextView"
             android:layout_centerHorizontal="true"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Weather Description"
+            android:text="50 deg F"
             android:textSize="32sp"
-            android:id="@+id/weatherDescriptionTextView"
-            android:layout_below="@+id/temperatureTextView"
+            android:id="@+id/temperatureTextView"
+            android:layout_below="@+id/weatherDescriptionTextView"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 

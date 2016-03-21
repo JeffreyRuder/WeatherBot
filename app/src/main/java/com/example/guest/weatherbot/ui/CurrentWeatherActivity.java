@@ -70,13 +70,16 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Resources res = getResources();
-                        WeatherStatus status = mStatuses.get(0);
-                        mCityNameTextView.setText(status.getCityName());
-                        mWeatherDescriptionTextView.setText(WordUtils.capitalize(status.getDescription()));
-                        mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(status.getTemp())));
-                        String image = ImageFinder.findImage(status);
+                        WeatherStatus currentWeatherStatus = mStatuses.get(0);
+                        mCityNameTextView.setText(currentWeatherStatus.getCityName());
+                        mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
+                        mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
+
+                        String image = ImageFinder.findImage(currentWeatherStatus);
+
                         if (!image.isEmpty()) {
                             Picasso.with(CurrentWeatherActivity.this).load(image).fit().centerCrop().into(mBackgroundImage);
+                            mBackgroundImage.setContentDescription(String.format(res.getString(R.string.current_weather_background_content_description), currentWeatherStatus.getDescription()));
                         } else {
                             mBackgroundImage.setBackgroundColor(ContextCompat.getColor(CurrentWeatherActivity.this, R.color.colorPrimaryLight));
                         }
