@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.guest.weatherbot.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
@@ -22,13 +22,14 @@
         android:textColorHint="@color/colorIcon"
         android:padding="6dp"
         android:gravity="center_horizontal"
+        android:inputType="number"
         android:layout_marginTop="40dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
-        android:id="@+id/button"
+        android:id="@+id/submitButton"
         android:layout_below="@+id/userZip"
         android:backgroundTint="@color/colorPrimaryDark"
         android:textColor="@color/colorIcon"
