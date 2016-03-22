@@ -1,5 +1,6 @@
 package com.example.guest.weatherbot.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
@@ -71,28 +72,34 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 mCurrentStatus = openWeatherService.processCurrentWeather(response);
-                Log.v("HERE ", response.toString());
 
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Resources res = getResources();
-                        DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT);
-                        WeatherStatus currentWeatherStatus = mCurrentStatus.get(0);
+                        DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.LONG);
 
-                        mCityNameTextView.setText(currentWeatherStatus.getCityName());
-                        mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
-                        mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
-                        //this is in the user's local time . . .
-                        mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
-                        mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
-                        String image = ImageFinder.findImage(currentWeatherStatus);
+                        try {
+                            WeatherStatus currentWeatherStatus = mCurrentStatus.get(0);
 
-                        if (!image.isEmpty()) {
-                            Picasso.with(CurrentWeatherActivity.this).load(image).fit().centerCrop().into(mBackgroundImage);
-                            mBackgroundImage.setContentDescription(String.format(res.getString(R.string.current_weather_background_content_description), currentWeatherStatus.getDescription()));
-                        } else {
-                            mBackgroundImage.setBackgroundColor(ContextCompat.getColor(CurrentWeatherActivity.this, R.color.colorPrimaryLight));
+                            mCityNameTextView.setText(currentWeatherStatus.getCityName());
+                            mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
+                            mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
+                            mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
+                            mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
+                            String image = ImageFinder.findImage(currentWeatherStatus);
+
+                            if (!image.isEmpty()) {
+                                Picasso.with(CurrentWeatherActivity.this).load(image).fit().centerCrop().into(mBackgroundImage);
+                                mBackgroundImage.setContentDescription(String.format(res.getString(R.string.current_weather_background_content_description), currentWeatherStatus.getDescription()));
+                            } else {
+                                mBackgroundImage.setBackgroundColor(ContextCompat.getColor(CurrentWeatherActivity.this, R.color.colorPrimaryLight));
+                            }
+                        } catch (IndexOutOfBoundsException iobe) {
+                            iobe.printStackTrace();
+                            Toast.makeText(CurrentWeatherActivity.this, "Please wait 5 minutes and try again", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(CurrentWeatherActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     }
                 });
