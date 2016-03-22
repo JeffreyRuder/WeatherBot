@@ -17,6 +17,7 @@ import com.example.guest.weatherbot.services.TemperatureConverter;
 import com.example.guest.weatherbot.services.WindDirectionConverter;
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.IOException;
@@ -80,6 +81,8 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
                             String windSpeed = String.format(Locale.US, "%.1f", currentWeatherStatus.getWindSpeed() * 2.23694);
                             String windDirection = String.format(Locale.US, WindDirectionConverter.convert(currentWeatherStatus.getWindDegrees()));
+
+                            setTitle(String.format(Locale.US, res.getString(R.string.title_output), currentWeatherStatus.getCityName()));
 
                             mCityNameTextView.setText(currentWeatherStatus.getCityName());
                             mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));

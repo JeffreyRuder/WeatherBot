@@ -6,10 +6,12 @@
     <string name="user_input_hint">Enter a Location</string>
     <string name="submit">Submit</string>
 
+    <string name="title_output">Weather for %s</string>
     <string name="temperature_output">%s&#xb0; F</string>
     <string name="sunrise_output">Sunrise: %s</string>
     <string name="sunset_output">Sunset: %s</string>
     <string name="humidity_output">Humidity %d%%</string>
     <string name="wind_output" formatted="false">Wind %s %s mph</string>
+
     <string name="current_weather_background_content_description">Image of %s</string>
 </resources>
