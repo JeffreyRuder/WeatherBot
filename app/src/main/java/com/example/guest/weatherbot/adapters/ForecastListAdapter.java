@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.services.TemperatureConverter;
+import com.example.guest.weatherbot.services.TimeZoneFinderService;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.text.WordUtils;
@@ -21,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

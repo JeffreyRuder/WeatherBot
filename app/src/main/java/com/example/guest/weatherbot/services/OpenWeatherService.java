@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,7 @@ import okhttp3.Response;
 
 public class OpenWeatherService {
     private Context mContext;
+    private String mTimeZoneId = "";
 
     public OpenWeatherService(Context context) {
         this.mContext = context;
@@ -92,6 +94,8 @@ public class OpenWeatherService {
             if (response.isSuccessful()) {
                 JSONObject weatherJSON = new JSONObject(jsonData);
                 int id = weatherJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
+                double lat = weatherJSON.getJSONObject("coord").getDouble("lat");
+                double lng = weatherJSON.getJSONObject("coord").getDouble("lon");
                 String main = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("main");
                 String description = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("description");
                 String icon = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
@@ -109,7 +113,7 @@ public class OpenWeatherService {
                 int cityId = weatherJSON.getInt("id");
                 String cityName = weatherJSON.getString("name");
 
-                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, pressure, humidity,
+                WeatherStatus status = new WeatherStatus(id, lat, lng, main, description, icon, temp, pressure, humidity,
                         tempMin, tempMax, windSpeed, windDegrees, clouds, dateTime, sunrise, sunset, cityId, cityName);
                 statuses.add(status);
             }
@@ -126,6 +130,8 @@ public class OpenWeatherService {
             if (response.isSuccessful()) {
                 JSONObject weatherJSON = new JSONObject(jsonData);
                 JSONArray forecasts = weatherJSON.getJSONArray("list");
+                double lng = weatherJSON.getJSONObject("city").getJSONObject("coord").getDouble("lon");
+                double lat = weatherJSON.getJSONObject("city").getJSONObject("coord").getDouble("lat");
 
                 for (int i = 0; i < forecasts.length(); i++) {
                     JSONObject forecastJSON = forecasts.getJSONObject(i);
@@ -136,7 +142,7 @@ public class OpenWeatherService {
                     String description = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("description");
                     String icon = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
 
-                    ForecastStatus forecastStatus = new ForecastStatus(date, temp, id, main, description, icon);
+                    ForecastStatus forecastStatus = new ForecastStatus(lat, lng, date, temp, id, main, description, icon);
                     forecastStatuses.add(forecastStatus);
                 }
             }

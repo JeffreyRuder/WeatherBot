@@ -1,9 +1,13 @@
 package com.example.guest.weatherbot.models;
 
+import com.example.guest.weatherbot.services.TimeZoneFinderService;
+
 import java.util.Date;
 
 public class WeatherStatus {
     private int mId;
+    private double mLat;
+    private double mLng;
     private String mMain;
     private String mDescription;
     private String mIcon;
@@ -16,15 +20,18 @@ public class WeatherStatus {
     private int mWindDegrees;
     private int mClouds;
     private Date dateTime;
+    private long timestamp;
     private Date mSunrise;
     private Date mSunset;
     private int mCityId;
     private String mCityName;
 
-    public WeatherStatus(int mId, String mMain, String mDescription, String mIcon, double mTemp,
+    public WeatherStatus(int mId, double mLat, double mLng, String mMain, String mDescription, String mIcon, double mTemp,
                          int mPressure, int mHumidity, double mMin, double mMax, double mWindSpeed,
                          int mWindDegrees, int mClouds, long dateTime, long mSunrise, long mSunset, int mCityId, String mCityName) {
         this.mId = mId;
+        this.mLat = mLat;
+        this.mLng = mLng;
         this.mMain = mMain;
         this.mDescription = mDescription;
         this.mIcon = mIcon;
@@ -37,6 +44,7 @@ public class WeatherStatus {
         this.mWindDegrees = mWindDegrees;
         this.mClouds = mClouds;
         this.dateTime = new Date(dateTime * 1000);
+        this.timestamp = dateTime;
         this.mSunrise = new Date(mSunrise * 1000);
         this.mSunset = new Date(mSunset * 1000);
         this.mCityId = mCityId;
@@ -45,6 +53,14 @@ public class WeatherStatus {
 
     public int getId() {
         return mId;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public double getLng() {
+        return mLng;
     }
 
     public String getMain() {
@@ -109,5 +125,9 @@ public class WeatherStatus {
 
     public String getCityName() {
         return mCityName;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

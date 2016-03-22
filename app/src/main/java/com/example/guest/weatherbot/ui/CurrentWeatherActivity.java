@@ -18,6 +18,7 @@ import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.services.ImageFinder;
 import com.example.guest.weatherbot.services.OpenWeatherService;
 import com.example.guest.weatherbot.services.TemperatureConverter;
+import com.example.guest.weatherbot.services.TimeZoneFinderService;
 import com.example.guest.weatherbot.services.WindDirectionConverter;
 import com.squareup.picasso.Picasso;
 
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +48,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.forecastRecyclerView) RecyclerView mRecyclerView;
 
     public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
-    public ArrayList<ForecastStatus> mForecastStatus = new ArrayList<>();
+    public ArrayList<ForecastStatus> mForecastArray = new ArrayList<>();
+
+    private double mPlaceLat;
+    private double mPlaceLng;
+    public long mRequestTimestamp;
+    public String mTimeZoneId;
     private ForecastListAdapter mAdapter;
     private final String TAG = this.getClass().getSimpleName();
 
@@ -92,11 +99,18 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                             mCityNameTextView.setText(currentWeatherStatus.getCityName());
                             mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
                             mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
-                            mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
-                            mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
+
                             mHumidityTextView.setText(String.format(res.getString(R.string.humidity_output), currentWeatherStatus.getHumidity()));
                             mWindTextView.setText(String.format(res.getString(R.string.wind_output), windDirection, windSpeed));
                             String image = ImageFinder.findImage(currentWeatherStatus);
+
+//                            mRequestTimestamp = currentWeatherStatus.getTimestamp();
+//                            mPlaceLat = currentWeatherStatus.getLat();
+//                            mPlaceLng = currentWeatherStatus.getLng();
+
+//                            getTimeZoneId(mPlaceLat, mPlaceLng, mRequestTimestamp);
+                            mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
+                            mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
 
                             if (!image.isEmpty()) {
                                 Picasso.with(CurrentWeatherActivity.this).load(image).fit().centerCrop().into(mBackgroundImage);
@@ -126,12 +140,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                mForecastStatus = openWeatherService.processForecastWeather(response);
+                mForecastArray = openWeatherService.processForecastWeather(response);
 
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mAdapter = new ForecastListAdapter(getApplicationContext(), mForecastStatus);
+                        mAdapter = new ForecastListAdapter(getApplicationContext(), mForecastArray);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CurrentWeatherActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
@@ -140,6 +154,21 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                         mRecyclerView.addItemDecoration(new VerticalSpaceDecoration(24));
                     }
                 });
+            }
+        });
+    }
+
+    private void getTimeZoneId(double lat, double lng, long timestamp) {
+        final TimeZoneFinderService timeZoneFinderService = new TimeZoneFinderService(this);
+        timeZoneFinderService.getTimeZone(lat, lng, timestamp, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                mTimeZoneId = timeZoneFinderService.processResults(response);
             }
         });
     }

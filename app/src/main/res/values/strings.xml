@@ -2,6 +2,7 @@
     <string name="app_name">Weather Bot</string>
 
     <string name="appid">b65070e5fb08750ce2107ae3286b7f60</string>
+    <string name="googletime">AIzaSyCsudB_1mjPTFM4A4o6pJaEBrnOPZPTUiY</string>
 
     <string name="user_input_hint">Enter a Location</string>
     <string name="submit">Submit</string>
