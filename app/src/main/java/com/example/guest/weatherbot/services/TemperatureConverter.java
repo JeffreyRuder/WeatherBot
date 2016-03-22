@@ -1,8 +1,5 @@
 package com.example.guest.weatherbot.services;
 
-/**
- * Created by Guest on 3/21/16.
- */
 public class TemperatureConverter {
     public static String toFahrenheit(double kelvin) {
         Double fahrenheit = (kelvin * 1.8) - 459.67;

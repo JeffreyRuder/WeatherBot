@@ -3,13 +3,13 @@
 
     <string name="appid">b65070e5fb08750ce2107ae3286b7f60</string>
 
-    <string name="zip_code_hint">Enter Zip Code</string>
+    <string name="user_input_hint">Enter a Location</string>
     <string name="submit">Submit</string>
-
-    <string name="weather_near">Weather Near %s</string>
 
     <string name="temperature_output">%s&#xb0; F</string>
     <string name="sunrise_output">Sunrise: %s</string>
     <string name="sunset_output">Sunset: %s</string>
+    <string name="humidity_output">Humidity %d%%</string>
+    <string name="wind_output" formatted="false">Wind %s %s mph</string>
     <string name="current_weather_background_content_description">Image of %s</string>
 </resources>

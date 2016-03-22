@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +40,16 @@ public class OpenWeatherService {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.openweathermap.org/data/2.5/weather").newBuilder();
-        urlBuilder.addQueryParameter("zip", location);
+
+        String zipCodePattern = "[0-9]{5}";
+        Matcher matcher = Pattern.compile(zipCodePattern).matcher(location);
+        if (matcher.find()) {
+            String parsedLocation = matcher.group();
+            urlBuilder.addQueryParameter("zip", parsedLocation);
+        } else {
+            String parsedLocation = location.trim();
+            urlBuilder.addQueryParameter("q", parsedLocation);
+        }
         urlBuilder.addQueryParameter("appid", APPID);
         String url = urlBuilder.build().toString();
 
