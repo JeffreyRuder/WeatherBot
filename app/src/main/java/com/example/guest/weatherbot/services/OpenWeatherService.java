@@ -7,9 +7,11 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.example.guest.weatherbot.R;
+import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.ui.MainActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,7 +67,15 @@ public class OpenWeatherService {
         OkHttpClient client = new OkHttpClient.Builder().build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.openweathermap.org/data/2.5/forecast").newBuilder();
-        urlBuilder.addQueryParameter("zip", location);
+        String zipCodePattern = "[0-9]{5}";
+        Matcher matcher = Pattern.compile(zipCodePattern).matcher(location);
+        if (matcher.find()) {
+            String parsedLocation = matcher.group();
+            urlBuilder.addQueryParameter("zip", parsedLocation);
+        } else {
+            String parsedLocation = location.trim();
+            urlBuilder.addQueryParameter("q", parsedLocation);
+        }
         urlBuilder.addQueryParameter("appid", APPID);
         String url = urlBuilder.build().toString();
 
@@ -109,26 +119,30 @@ public class OpenWeatherService {
         return statuses;
     }
 
-//    public ArrayList<WeatherStatus> processForecastWeather(Response response) {
-//        ArrayList<WeatherStatus> statuses = new ArrayList<>();
-//        try {
-//            String jsonData = response.body().string();
-//            if (response.isSuccessful()) {
-//                JSONObject weatherJSON = new JSONObject(jsonData);
-//                int id = weatherJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
-//                String main = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("main");
-//                String description = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("description");
-//                String icon = weatherJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
-//                double temp = weatherJSON.getJSONObject("main").getDouble("temp");
-//                int cityId = weatherJSON.getInt("id");
-//                String cityName = weatherJSON.getString("name");
-//
-//                WeatherStatus status = new WeatherStatus(id, main, description, icon, temp, cityId, cityName);
-//                statuses.add(status);
-//            }
-//        } catch (IOException | JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return statuses;
-//    }
+    public ArrayList<ForecastStatus> processForecastWeather(Response response) {
+        ArrayList<ForecastStatus> forecastStatuses = new ArrayList<>();
+        try {
+            String jsonData = response.body().string();
+            if (response.isSuccessful()) {
+                JSONObject weatherJSON = new JSONObject(jsonData);
+                JSONArray forecasts = weatherJSON.getJSONArray("list");
+
+                for (int i = 0; i < forecasts.length(); i++) {
+                    JSONObject forecastJSON = forecasts.getJSONObject(i);
+                    int date = forecastJSON.getInt("dt");
+                    double temp = forecastJSON.getJSONObject("main").getDouble("temp");
+                    int id = forecastJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
+                    String main = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("main");
+                    String description = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("description");
+                    String icon = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("icon");
+
+                    ForecastStatus forecastStatus = new ForecastStatus(date, temp, id, main, description, icon);
+                    forecastStatuses.add(forecastStatus);
+                }
+            }
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return forecastStatuses;
+    }
 }

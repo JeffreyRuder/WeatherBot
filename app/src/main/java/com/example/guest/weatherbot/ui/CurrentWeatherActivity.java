@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guest.weatherbot.R;
+import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.services.ImageFinder;
 import com.example.guest.weatherbot.services.OpenWeatherService;
@@ -17,7 +18,6 @@ import com.example.guest.weatherbot.services.TemperatureConverter;
 import com.example.guest.weatherbot.services.WindDirectionConverter;
 import com.squareup.picasso.Picasso;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.IOException;
@@ -39,10 +39,10 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.sunriseTextView) TextView mSunriseTextView;
     @Bind(R.id.sunsetTextView) TextView mSunsetTextView;
     @Bind(R.id.humidityTextView) TextView mHumidityTextView;
-    @Bind(R.id.windSpeedTextView) TextView mWindTextView;
+    @Bind(R.id.windTextView) TextView mWindTextView;
 
     public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
-    public ArrayList<WeatherStatus> mForecastStatus = new ArrayList<>();
+    public ArrayList<ForecastStatus> mForecastStatus = new ArrayList<>();
     private final String TAG = this.getClass().getSimpleName();
 
     @Override
@@ -121,6 +121,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                mForecastStatus = openWeatherService.processForecastWeather(response);
 
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override

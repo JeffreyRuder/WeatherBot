@@ -89,8 +89,25 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Wind Speed"
-        android:id="@+id/windSpeedTextView"
+        android:id="@+id/windTextView"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_below="@+id/humidityTextView"
         android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/windTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/sunriseTextView">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/forecastRecyclerView"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
