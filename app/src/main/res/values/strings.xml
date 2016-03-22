@@ -9,5 +9,7 @@
     <string name="weather_near">Weather Near %s</string>
 
     <string name="temperature_output">%s&#xb0; F</string>
+    <string name="sunrise_output">Sunrise: %s</string>
+    <string name="sunset_output">Sunset: %s</string>
     <string name="current_weather_background_content_description">Image of %s</string>
 </resources>

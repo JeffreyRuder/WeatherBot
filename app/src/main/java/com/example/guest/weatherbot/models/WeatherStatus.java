@@ -23,7 +23,7 @@ public class WeatherStatus {
 
     public WeatherStatus(int mId, String mMain, String mDescription, String mIcon, double mTemp,
                          int mPressure, int mHumidity, double mMin, double mMax, double mWindSpeed,
-                         int mWindDegrees, int mClouds, int dateTime, int mSunrise, int mSunset, int mCityId, String mCityName) {
+                         int mWindDegrees, int mClouds, int dateTime, long mSunrise, long mSunset, int mCityId, String mCityName) {
         this.mId = mId;
         this.mMain = mMain;
         this.mDescription = mDescription;
@@ -36,9 +36,9 @@ public class WeatherStatus {
         this.mWindSpeed = mWindSpeed;
         this.mWindDegrees = mWindDegrees;
         this.mClouds = mClouds;
-        this.dateTime = new Date(dateTime);
-        this.mSunrise = new Date(mSunrise);
-        this.mSunset = new Date(mSunset);
+        this.dateTime = new Date(dateTime * 1000);
+        this.mSunrise = new Date(mSunrise * 1000);
+        this.mSunset = new Date(mSunset * 1000);
         this.mCityId = mCityId;
         this.mCityName = mCityName;
     }

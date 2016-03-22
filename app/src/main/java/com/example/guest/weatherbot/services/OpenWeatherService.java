@@ -1,14 +1,22 @@
 package com.example.guest.weatherbot.services;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
+
 import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.WeatherStatus;
+import com.example.guest.weatherbot.ui.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -75,8 +83,8 @@ public class OpenWeatherService {
                 int windDegrees = weatherJSON.getJSONObject("wind").getInt("deg");
                 int clouds = weatherJSON.getJSONObject("clouds").getInt("all");
                 int dateTime = weatherJSON.getInt("dt");
-                int sunrise = weatherJSON.getJSONObject("sys").getInt("sunrise");
-                int sunset = weatherJSON.getJSONObject("sys").getInt("sunset");
+                long sunrise = weatherJSON.getJSONObject("sys").getInt("sunrise");
+                long sunset = weatherJSON.getJSONObject("sys").getInt("sunset");
                 int cityId = weatherJSON.getInt("id");
                 String cityName = weatherJSON.getString("name");
 

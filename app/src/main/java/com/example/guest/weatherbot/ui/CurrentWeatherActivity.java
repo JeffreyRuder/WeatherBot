@@ -6,8 +6,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.WeatherStatus;
@@ -17,8 +19,11 @@ import com.example.guest.weatherbot.services.TemperatureConverter;
 import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -33,6 +38,8 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.temperatureTextView) TextView mTemperatureTextView;
     @Bind(R.id.weatherDescriptionTextView) TextView mWeatherDescriptionTextView;
     @Bind(R.id.backgroundImage) ImageView mBackgroundImage;
+    @Bind(R.id.sunriseTextView) TextView mSunriseTextView;
+    @Bind(R.id.sunsetTextView) TextView mSunsetTextView;
 
     public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
     public ArrayList<WeatherStatus> mForecastStatus = new ArrayList<>();
@@ -70,11 +77,15 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Resources res = getResources();
+                        DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT);
                         WeatherStatus currentWeatherStatus = mCurrentStatus.get(0);
+
                         mCityNameTextView.setText(currentWeatherStatus.getCityName());
                         mWeatherDescriptionTextView.setText(WordUtils.capitalize(currentWeatherStatus.getDescription()));
                         mTemperatureTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(currentWeatherStatus.getTemp())));
-
+                        //this is in the user's local time . . .
+                        mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
+                        mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
                         String image = ImageFinder.findImage(currentWeatherStatus);
 
                         if (!image.isEmpty()) {

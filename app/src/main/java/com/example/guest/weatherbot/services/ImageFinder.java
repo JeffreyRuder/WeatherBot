@@ -33,6 +33,9 @@ public class ImageFinder {
             //haze or smoke
             case 711:case 721:case 761: image = "http://i.imgur.com/GKYzpvn.jpg";
                 break;
+            //volcanic ash
+            case 762: image="http://i.imgur.com/KX8SCYz.jpg";
+                break;
             //clear sky
             case 800: image = "http://i.imgur.com/EIJMl2T.jpg";
                 break;
@@ -40,7 +43,7 @@ public class ImageFinder {
             case 801: image = "http://i.imgur.com/hUMz3ui.jpg";
                 break;
             //scattered or broken clouds
-            case 802:case 803: image = "http://i.imgur.com/zvamn63.jpg";
+            case 802:case 803: image = "http://i.imgur.com/lHepOUn.jpg";
                     break;
             //overcast
             case 804: image = "http://i.imgur.com/B7K9F83.jpg";
