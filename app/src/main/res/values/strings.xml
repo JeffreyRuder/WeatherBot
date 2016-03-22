@@ -13,5 +13,7 @@
     <string name="humidity_output">Humidity %d%%</string>
     <string name="wind_output" formatted="false">Wind %s %s mph</string>
 
+    <string name="icon_url">http://openweathermap.org/img/w/%s.png</string>
+
     <string name="current_weather_background_content_description">Image of %s</string>
 </resources>

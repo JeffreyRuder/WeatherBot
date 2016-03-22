@@ -137,7 +137,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
 
-                        mRecyclerView.addItemDecoration(new VerticalSpaceDecoration(18));
+                        mRecyclerView.addItemDecoration(new VerticalSpaceDecoration(24));
                     }
                 });
             }

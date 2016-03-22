@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.services.TemperatureConverter;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.text.WordUtils;
 import org.w3c.dom.Text;
@@ -18,6 +20,7 @@ import org.w3c.dom.Text;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,6 +56,8 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         @Bind(R.id.forecastTimeTextView) TextView mTimeTextView;
         @Bind(R.id.forecastTempTextView) TextView mTempTextView;
         @Bind(R.id.forecastDescriptionTextView) TextView mDescriptionTextView;
+        @Bind(R.id.iconImageView) ImageView mIconImageView;
+
         private Context mContext;
 
         public ForecastViewHolder(View itemView) {
@@ -62,15 +67,18 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         }
 
         public void bindForecastStatus(ForecastStatus status) {
-            DateFormat dfDate = DateFormat.getDateInstance(DateFormat.SHORT);
-
-            SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a zzz");
-
             Resources res = mContext.getResources();
+            SimpleDateFormat sdfDate = new SimpleDateFormat("MMM d", Locale.US);
+            SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a zzz", Locale.US);
+
+            String iconURL = String.format(Locale.US, res.getString(R.string.icon_url), status.getIcon());
+
             mTempTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(status.getTemp())));
             mDescriptionTextView.setText(WordUtils.capitalize(status.getDescription()));
-            mDateTextView.setText(dfDate.format(status.getDate()));
+            mDateTextView.setText(sdfDate.format(status.getDate()));
             mTimeTextView.setText(sdfTime.format(status.getDate()));
+            Picasso.with(mContext).load(iconURL).into(mIconImageView);
+
         }
     }
 }
