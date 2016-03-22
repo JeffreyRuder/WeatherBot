@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Description"
             android:id="@+id/forecastDescriptionTextView"
             android:layout_below="@+id/forecastTempTextView"
@@ -39,7 +39,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Date"
             android:id="@+id/forecastDateTextView"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/forecastTimeTextView"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
@@ -49,8 +49,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Time"
             android:id="@+id/forecastTimeTextView"
-            android:layout_below="@+id/forecastDateTextView"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

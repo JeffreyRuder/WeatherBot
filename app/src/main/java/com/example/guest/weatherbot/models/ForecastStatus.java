@@ -10,7 +10,7 @@ public class ForecastStatus {
     private String mDescription;
     private String mIcon;
 
-    public ForecastStatus (int date, double temp, int id, String main, String description, String icon) {
+    public ForecastStatus (long date, double temp, int id, String main, String description, String icon) {
         this.mDate = new Date(date * 1000);
         this.mTemp = temp;
         this.mId = id;

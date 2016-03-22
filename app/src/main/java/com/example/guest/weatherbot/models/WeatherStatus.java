@@ -23,7 +23,7 @@ public class WeatherStatus {
 
     public WeatherStatus(int mId, String mMain, String mDescription, String mIcon, double mTemp,
                          int mPressure, int mHumidity, double mMin, double mMax, double mWindSpeed,
-                         int mWindDegrees, int mClouds, int dateTime, long mSunrise, long mSunset, int mCityId, String mCityName) {
+                         int mWindDegrees, int mClouds, long dateTime, long mSunrise, long mSunset, int mCityId, String mCityName) {
         this.mId = mId;
         this.mMain = mMain;
         this.mDescription = mDescription;

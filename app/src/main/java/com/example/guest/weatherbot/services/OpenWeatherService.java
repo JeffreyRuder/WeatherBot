@@ -103,7 +103,7 @@ public class OpenWeatherService {
                 double windSpeed = weatherJSON.getJSONObject("wind").getDouble("speed");
                 int windDegrees = weatherJSON.getJSONObject("wind").getInt("deg");
                 int clouds = weatherJSON.getJSONObject("clouds").getInt("all");
-                int dateTime = weatherJSON.getInt("dt");
+                long dateTime = weatherJSON.getInt("dt");
                 long sunrise = weatherJSON.getJSONObject("sys").getInt("sunrise");
                 long sunset = weatherJSON.getJSONObject("sys").getInt("sunset");
                 int cityId = weatherJSON.getInt("id");
@@ -129,7 +129,7 @@ public class OpenWeatherService {
 
                 for (int i = 0; i < forecasts.length(); i++) {
                     JSONObject forecastJSON = forecasts.getJSONObject(i);
-                    int date = forecastJSON.getInt("dt");
+                    long date = forecastJSON.getInt("dt");
                     double temp = forecastJSON.getJSONObject("main").getDouble("temp");
                     int id = forecastJSON.getJSONArray("weather").getJSONObject(0).getInt("id");
                     String main = forecastJSON.getJSONArray("weather").getJSONObject(0).getString("main");

@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.IOException;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -79,7 +79,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Resources res = getResources();
-                        DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.LONG);
+                        SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a zzz", Locale.US);
 
                         try {
                             WeatherStatus currentWeatherStatus = mCurrentStatus.get(0);
@@ -136,6 +136,8 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CurrentWeatherActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
+
+                        mRecyclerView.addItemDecoration(new VerticalSpaceDecoration(18));
                     }
                 });
             }

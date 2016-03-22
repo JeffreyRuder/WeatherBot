@@ -12,9 +12,11 @@ import com.example.guest.weatherbot.R;
 import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.services.TemperatureConverter;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -61,13 +63,14 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
         public void bindForecastStatus(ForecastStatus status) {
             DateFormat dfDate = DateFormat.getDateInstance(DateFormat.SHORT);
-            DateFormat dfTime = DateFormat.getTimeInstance(DateFormat.LONG);
+
+            SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a zzz");
 
             Resources res = mContext.getResources();
             mTempTextView.setText(String.format(res.getString(R.string.temperature_output), TemperatureConverter.toFahrenheit(status.getTemp())));
-            mDescriptionTextView.setText(status.getDescription());
+            mDescriptionTextView.setText(WordUtils.capitalize(status.getDescription()));
             mDateTextView.setText(dfDate.format(status.getDate()));
-            mTimeTextView.setText(dfTime.format(status.getDate()));
+            mTimeTextView.setText(sdfTime.format(status.getDate()));
         }
     }
 }
