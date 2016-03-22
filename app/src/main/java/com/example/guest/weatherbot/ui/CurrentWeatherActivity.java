@@ -5,11 +5,14 @@ import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.guest.weatherbot.R;
+import com.example.guest.weatherbot.adapters.ForecastListAdapter;
 import com.example.guest.weatherbot.models.ForecastStatus;
 import com.example.guest.weatherbot.models.WeatherStatus;
 import com.example.guest.weatherbot.services.ImageFinder;
@@ -40,9 +43,11 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Bind(R.id.sunsetTextView) TextView mSunsetTextView;
     @Bind(R.id.humidityTextView) TextView mHumidityTextView;
     @Bind(R.id.windTextView) TextView mWindTextView;
+    @Bind(R.id.forecastRecyclerView) RecyclerView mRecyclerView;
 
     public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
     public ArrayList<ForecastStatus> mForecastStatus = new ArrayList<>();
+    private ForecastListAdapter mAdapter;
     private final String TAG = this.getClass().getSimpleName();
 
     @Override
@@ -126,7 +131,11 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 CurrentWeatherActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
+                        mAdapter = new ForecastListAdapter(getApplicationContext(), mForecastStatus);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CurrentWeatherActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
                     }
                 });
             }
