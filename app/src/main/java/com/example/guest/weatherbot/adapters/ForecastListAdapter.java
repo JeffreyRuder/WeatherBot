@@ -66,7 +66,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
         public void bindForecastStatus(ForecastStatus status) {
             Resources res = mContext.getResources();
-            SimpleDateFormat sdfDate = new SimpleDateFormat("MMM d", Locale.US);
+            SimpleDateFormat sdfDate = new SimpleDateFormat("E, MMM d", Locale.US);
             SimpleDateFormat sdfTime = new SimpleDateFormat("h:mm a zzz", Locale.US);
 
             String iconURL = String.format(Locale.US, res.getString(R.string.icon_url), status.getIcon());

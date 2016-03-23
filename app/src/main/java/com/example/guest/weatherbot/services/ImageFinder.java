@@ -58,10 +58,10 @@ public class ImageFinder {
                 image = "http://i.imgur.com/yk9mNHW.jpg";
             } else if (icon.contains("01")) {
                 //clear
-                image = "http://i.imgur.com/xRsnRdN.jpg";
+                image = "http://i.imgur.com/ys0jbgs.jpg";
             } else if (icon.contains("02")) {
                 //light clouds
-                image = "http://i.imgur.com/iCp8I2B.jpg";
+                image = "http://i.imgur.com/GIe9imk.jpg";
             } else if (icon.contains("03")) {
                 //medium clouds
                 image = "http://i.imgur.com/xCVgJr7.jpg";
