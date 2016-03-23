@@ -52,7 +52,6 @@ public class TimeZoneFinderService {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        Log.v("Results", results);
         return results;
     }
 }

@@ -6,7 +6,6 @@ public class ForecastStatus {
     private double mLat;
     private double mLng;
     private Date mDate;
-    private String mTimeZoneId;
     private double mTemp;
     private int mId;
     private String mMain;
@@ -54,9 +53,5 @@ public class ForecastStatus {
 
     public double getLng() {
         return mLng;
-    }
-
-    public String getTimeZoneId() {
-        return mTimeZoneId;
     }
 }

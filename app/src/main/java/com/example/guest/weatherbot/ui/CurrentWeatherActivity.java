@@ -50,9 +50,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     public ArrayList<WeatherStatus> mCurrentStatus = new ArrayList<>();
     public ArrayList<ForecastStatus> mForecastArray = new ArrayList<>();
 
-    private double mPlaceLat;
-    private double mPlaceLng;
-    public long mRequestTimestamp;
     public String mTimeZoneId;
     private ForecastListAdapter mAdapter;
     private final String TAG = this.getClass().getSimpleName();
@@ -104,11 +101,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                             mWindTextView.setText(String.format(res.getString(R.string.wind_output), windDirection, windSpeed));
                             String image = ImageFinder.findImage(currentWeatherStatus);
 
-//                            mRequestTimestamp = currentWeatherStatus.getTimestamp();
-//                            mPlaceLat = currentWeatherStatus.getLat();
-//                            mPlaceLng = currentWeatherStatus.getLng();
-
-//                            getTimeZoneId(mPlaceLat, mPlaceLng, mRequestTimestamp);
                             mSunriseTextView.setText(String.format(res.getString(R.string.sunrise_output), timeFormatter.format(currentWeatherStatus.getSunrise())));
                             mSunsetTextView.setText(String.format(res.getString(R.string.sunset_output), timeFormatter.format(currentWeatherStatus.getSunset())));
 
@@ -150,7 +142,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CurrentWeatherActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
-
                         mRecyclerView.addItemDecoration(new VerticalSpaceDecoration(24));
                     }
                 });
