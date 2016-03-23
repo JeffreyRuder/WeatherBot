@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.guest.weatherbot.R;
 import com.squareup.picasso.Picasso;
@@ -53,10 +54,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v == mSubmitButton) {
             String location = mUserZip.getText().toString();
-            Intent intent = new Intent(MainActivity.this, CurrentWeatherActivity.class);
-            intent.putExtra("location", location);
-            mUserZip.setText("");
-            startActivity(intent);
+            if (location.length() < 5) {
+                Toast.makeText(this, "Please enter a 5 digit zip code", Toast.LENGTH_LONG).show();
+            } else {
+                Intent intent = new Intent(MainActivity.this, CurrentWeatherActivity.class);
+                intent.putExtra("location", location);
+                mUserZip.setText("");
+                startActivity(intent);
+            }
         }
     }
 }
